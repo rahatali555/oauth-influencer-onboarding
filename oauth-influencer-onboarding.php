@@ -15,5 +15,6 @@ function oio_init() {
 
     // Initialize compliance logger
     new OIO_Compliance();
+     new OIO_OAuth_Handler(); // <-- Added
 }
 add_action( 'plugins_loaded', 'oio_init' );
