@@ -17,3 +17,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'OIO_VERSION', '0.1.0' );
 define( 'OIO_DIR', plugin_dir_path( __FILE__ ) );
 define( 'OIO_URL', plugin_dir_url( __FILE__ ) );
+
+// Load core classes
+require_once OIO_DIR . 'includes/class-instagram-oauth.php';
+require_once OIO_DIR . 'includes/class-tiktok-oauth.php';
+// We'll add compliance & settings next
+
+/**
+ * Initialize the plugin
+ */
+function oio_init() {
+    // Initialize settings
+    $settings = new OIO_Settings();
+    add_action( 'admin_init', [ $settings, 'register_settings' ] );
+    add_action( 'admin_menu', [ $settings, 'add_settings_page' ] );
+
+    // Initialize compliance logger
+    new OIO_Compliance();
+}
+add_action( 'plugins_loaded', 'oio_init' );
