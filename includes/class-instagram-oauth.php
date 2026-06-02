@@ -4,9 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class OIO_Instagram_OAuth {
-    private $client_id;
-    private $client_secret;
-    private $redirect_uri;
+    private string $client_id;
+    private string $client_secret;
+    private string $redirect_uri;
 
     public function __construct() {
         $this->client_id     = get_option( 'oio_instagram_client_id', '' );
@@ -17,7 +17,7 @@ class OIO_Instagram_OAuth {
     /**
      * Generate secure state parameter for CSRF protection
      */
-    public function generate_state() {
+    public function generate_state(): string {
         $state = wp_generate_password( 32, false );
         set_transient( 'oio_instagram_state', $state, 15 * MINUTE_IN_SECONDS );
         return $state;
@@ -46,7 +46,7 @@ class OIO_Instagram_OAuth {
     /**
      * Exchange authorization code for access token
      */
-    public function exchange_token( $code ) {
+    public function exchange_token( string $code ) {
         if ( empty( $code ) ) {
             return new WP_Error( 'missing_code', __( 'Authorization code is missing.', 'oauth-influencer-onboarding' ) );
         }
